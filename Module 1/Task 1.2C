@@ -1,0 +1,50 @@
+int ledPin = 13;                
+int interruptPin = 2;
+int motionpirpin = 3;
+  
+int led_state = LOW;
+int pir_state = LOW;
+int motion_state =LOW;
+void setup() {
+    pinMode(ledPin, OUTPUT);      
+    pinMode(interruptPin, INPUT_PULLUP);
+    pinMode(motionpirpin, INPUT_PULLUP); 
+    Serial.begin(9600);// declare sensor as input
+    attachInterrupt(digitalPinToInterrupt(interruptPin), MotionBlink, CHANGE);
+      
+    attachInterrupt(digitalPinToInterrupt(motionpirpin), MotionPIR, CHANGE);
+    Serial.begin(9600);
+}
+
+ 
+
+void MotionPIR()
+{
+    int motionstate = digitalRead(motionpirpin);
+    if(motionstate != motion_state)
+    {
+        led_state = !led_state;
+        digitalWrite(ledPin, led_state);
+        Serial.println("Motion Detected3");
+    }  
+}  
+
+ 
+
+void MotionBlink()
+{
+    int pirstate = digitalRead(interruptPin);
+    if(pirstate != pir_state)
+    {
+        led_state = !led_state;
+        digitalWrite(ledPin, led_state);
+        Serial.println("Motion Detected2");
+    }  
+}
+
+ 
+
+void loop(){
+    int pirstate = digitalRead(interruptPin);
+    int motionstate = digitalRead(motionpirpin);
+}
